@@ -1,9 +1,8 @@
 import React from "react";
-import { ethers } from "ethers";
+
 import { useState, useEffect, useContext } from "react";
-import detectEthereumProvider from "@metamask/detect-provider";
+
 import { SignerContext } from "../context/signerContext";
-import { toast } from "react-hot-toast";
 
 const PartyRegister = () => {
   const { signer, setSigner } = useContext(SignerContext);

@@ -1,6 +1,14 @@
+"use client";
 import Navbar from "@/components/layout/Navbar";
+import Link from "next/link";
 import "./globals.css";
 import { Inter } from "next/font/google";
+import NoSSRToaster from "@/components/NoSSRToaster";
+import { SignerContext } from "@/context/signerContext";
+import { useState } from "react";
+import Footer from "@/components/layout/Footer";
+import { EtherProviderContext } from "@/context/EtherProviderContext";
+import { ethers } from "ethers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,10 +18,26 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const [signer, setSigner] = useState("");
+  const signerObject = { signer, setSigner };
+
   return (
     <html lang="en">
+      <NoSSRToaster></NoSSRToaster>
       <body className={inter.className}>
-        <Navbar>{children}</Navbar>
+        <SignerContext.Provider value={signerObject}>
+          <EtherProviderContext.Provider
+            value={
+              window.ethereum == null
+                ? ""
+                : new ethers.BrowserProvider(window.ethereum)
+            }
+          >
+            <Navbar />
+            {children}
+            <Footer></Footer>
+          </EtherProviderContext.Provider>
+        </SignerContext.Provider>
       </body>
     </html>
   );

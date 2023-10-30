@@ -1,7 +1,11 @@
-import React from "react";
+"use client";
+import { SignerContext } from "@/context/signerContext";
+import Link from "next/link";
+import React, { useContext } from "react";
 
 const page = () => {
-  return <div>HI</div>;
+  // const { signer, setSigner } = useContext(SignerContext);
+  return <div></div>;
 };
 
 export default page;
