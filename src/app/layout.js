@@ -9,6 +9,7 @@ import { useState } from "react";
 import Footer from "@/components/layout/Footer";
 import { EtherProviderContext } from "@/context/EtherProviderContext";
 import { ethers } from "ethers";
+import ElectionStages from "@/components/ElectionStages";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -34,7 +35,10 @@ export default function RootLayout({ children }) {
             }
           >
             <Navbar />
-            {children}
+            <div style={{ height: "72vh" }}>
+              <ElectionStages>{children}</ElectionStages>
+            </div>
+
             <Footer></Footer>
           </EtherProviderContext.Provider>
         </SignerContext.Provider>

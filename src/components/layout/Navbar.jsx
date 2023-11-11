@@ -61,7 +61,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="w-full flex justify-between items-center px-6 py-2 bg-[#222831] text-[#EEEEEE]  border-slate-700 text-l title-krypt drop-shadow-xl ">
+    <nav
+      className="w-full flex justify-between items-center px-6 py-2 bg-[#222831] text-[#EEEEEE]  border-slate-700 text-l title-krypt drop-shadow-xl"
+      style={{ height: "20vh" }}
+    >
       <div className="flex flex-1 justify-around items-center gap-4">
         <span className="font-bold text-[#00ADB5]">
           <SiBlockchaindotcom size="3rem"></SiBlockchaindotcom>VOTECHAIN BHARAT
