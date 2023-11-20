@@ -15,12 +15,14 @@ export async function firebase_uploadSymbol(file, filename) {
   }
 }
 
-export async function firebase_getPartySymbol() {
+export async function firebase_getPartySymbol(path) {
+  var url = "";
   try {
-    const url = await getDownloadURL(ref(storage, "images/stars.jpg"));
-    return url;
+    url = await getDownloadURL(ref(storage, path));
   } catch (err) {
     console.log(err);
-    return null;
   }
+  return new Promise((resolve, reject) => {
+    resolve(url);
+  });
 }

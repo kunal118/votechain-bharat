@@ -27,15 +27,22 @@ const Navbar = () => {
   const etherProvider = useContext(EtherProviderContext);
   const [votingContract, setVotingContract] = useState("");
   // toast.success("hola");
-  console.log(etherProvider);
 
   useEffect(() => {
-    // setSigner(await etherProvider.getSigner());
-    // alert(await votingContract.name());
+    if (votingContract == "") return;
     async function tellname() {
-      console.log(await votingContract.getElectionDetails());
+      // alert(await votingContract.name());
+      console.log(await votingContract.addCandidate("kunal", "my_logo"));
     }
+    votingContract.on("CandidateAdded", (name, logo, event) => {
+      // const amount = formatEther(_amount, 18);
+      console.log(`${name} => ${logo}`);
 
+      // The `event.log` has the entire EventLog
+
+      // Optionally, stop listening
+      // event.removeListener();
+    });
     tellname();
   }, [votingContract]);
 
@@ -47,9 +54,11 @@ const Navbar = () => {
         throw { code: 100, message: "Metamask not available" };
       // const provider = new ethers.BrowserProvider(window.ethereum);
       await etherProvider.send("eth_requestAccounts", []);
-      setSigner(await etherProvider.getSigner());
+      const temp_signer = await etherProvider.getSigner();
+      setSigner(temp_signer);
+      // console.log(temp_signer);
       setVotingContract(
-        new ethers.Contract(contractAddress, contractAbi, etherProvider)
+        new ethers.Contract(contractAddress, contractAbi, temp_signer)
       );
     } catch (e) {
       console.log(e);
@@ -59,6 +68,15 @@ const Navbar = () => {
     setIsConnecting(false);
     // console.log("provider destroyed");
   };
+
+  useEffect(() => {
+    if (etherProvider == null) return;
+
+    async function request_connection() {
+      handleConnect();
+    }
+    request_connection();
+  }, []);
 
   return (
     <nav
@@ -73,8 +91,11 @@ const Navbar = () => {
         {/* <img src={logo} alt="logo" className="w-32 cursor-pointer"></img> */}
         <ul className=" flex list-none justify-between items-center flex-row flex-initial gap-2">
           {[
-            { name: "Home", path: "/" },
-            { name: "Candidate Registration", path: "/registerCandidate" },
+            { name: "Home", path: "/admin" },
+            {
+              name: "Candidate Registration",
+              path: "/admin/registerCandidate",
+            },
             { name: "Voter Registration", path: "/registerVoter" },
           ].map((item, index) => {
             return (

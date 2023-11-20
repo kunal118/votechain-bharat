@@ -1,6 +1,6 @@
-import { getFirestore } from "firebase/firestore";
-import { fireApp } from "./config";
+import { getDocs, getFirestore } from "firebase/firestore";
 import { collection, addDoc } from "firebase/firestore";
+import { fireApp } from "./config";
 
 const db = getFirestore(fireApp);
 
@@ -31,9 +31,10 @@ export async function firebase_getPartyDetails() {
       //   console.log(`${doc.id} => ${doc.data()}`);
       details.push({ id: doc.id, data: doc.data() });
     });
-    return details;
   } catch (err) {
     console.log(err);
-    return null;
   }
+  return new Promise((resolve, reject) => {
+    resolve(details);
+  });
 }

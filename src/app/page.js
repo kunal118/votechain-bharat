@@ -7,7 +7,7 @@ import React, { useContext } from "react";
 const page = () => {
   // const { signer, setSigner } = useContext(SignerContext);
 
-  return <div style={{ height: "72vh" }}></div>;
+  return <div></div>;
 };
 
 export default page;

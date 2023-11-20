@@ -46,7 +46,7 @@ const ElectionStages = ({ children }) => {
             </li>
           </ul>
         </div>
-        <div className="w-4/5 overflow-y-scroll">{children}</div>
+        <div className="w-4/5 overflow-y-scroll p-5">{children}</div>
       </div>
     </>
   );
