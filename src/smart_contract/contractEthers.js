@@ -1,4 +1,6 @@
-export const contractAddress = "0x26c5529904aDd2751D43E9a83ffc9Cc37009CCF7";
+// export const contractAddress = "0x26c5529904aDd2751D43E9a83ffc9Cc37009CCF7";
+// export const contractAddress = "0x6D827050dBbf61239cd3b85b751bbACB7d7083b2";
+export const contractAddress = "0x88c44f925df6cfa7b2cf3aef067b4929cca20d52";
 
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
@@ -38,11 +40,23 @@ export const contractAbi = [
     inputs: [
       {
         internalType: "uint256",
+        name: "uid",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
         name: "candidateId",
         type: "uint256",
       },
     ],
     name: "castVote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "endVoting",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -72,6 +86,19 @@ export const contractAbi = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: "address",
+        name: "adminAddress",
+        type: "address",
+      },
+    ],
+    name: "AdminAdded",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: false,
         internalType: "string",
         name: "name",
@@ -89,14 +116,14 @@ export const contractAbi = [
   },
   {
     inputs: [],
-    name: "endVoting",
+    name: "nextStage",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
   {
     inputs: [],
-    name: "nextStage",
+    name: "prevStage",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -105,10 +132,23 @@ export const contractAbi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: "uint8",
+        name: "newStage",
+        type: "uint8",
+      },
+    ],
+    name: "StageChanged",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
-        internalType: "address",
-        name: "voter",
-        type: "address",
+        internalType: "uint256",
+        name: "uid",
+        type: "uint256",
       },
       {
         indexed: true,
@@ -183,6 +223,36 @@ export const contractAbi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getCandidateDetails",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "string",
+            name: "name",
+            type: "string",
+          },
+          {
+            internalType: "string",
+            name: "logo",
+            type: "string",
+          },
+          {
+            internalType: "uint256",
+            name: "voteCount",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct FingerprintVoting.Candidate[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -280,7 +350,7 @@ export const contractAbi = [
         type: "uint256",
       },
     ],
-    name: "hasVoted",
+    name: "hasVotedByUID",
     outputs: [
       {
         internalType: "bool",
@@ -305,30 +375,6 @@ export const contractAbi = [
         internalType: "bool",
         name: "",
         type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    name: "machines",
-    outputs: [
-      {
-        internalType: "string",
-        name: "machineID",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "boothID",
-        type: "string",
       },
     ],
     stateMutability: "view",

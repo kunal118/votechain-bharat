@@ -2,11 +2,11 @@ import React from "react";
 import { ethers } from "ethers";
 import { useState, useEffect, useContext } from "react";
 import detectEthereumProvider from "@metamask/detect-provider";
-import { SignerContext } from "../context/signerContext";
+import { EtherSignerContext } from "../context/EtherSignerContext";
 import { toast } from "react-hot-toast";
 
 const VoterRegister = () => {
-  const { signer, setSigner } = useContext(SignerContext);
+  const { signer, setSigner } = useContext(EtherSignerContext);
   const [amount, setAmount] = useState(0);
   const [receiver, setReceiver] = useState("");
   const [units, setUnits] = useState("gwei");

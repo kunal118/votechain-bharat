@@ -1,18 +1,25 @@
 "use client";
 
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 
-const page = () => {
+const VotingPage = ({ votingContract }) => {
   // const { signer, setSigner } = useContext(SignerContext);
-  let count = 7;
+  const candidateDetails = JSON.parse(localStorage.getItem("candidateDetails"));
+  const [uid, setUid] = useState("");
+  const count = candidateDetails.length;
+  function castVote(id) {
+    votingContract.castVote(uid, id);
+  }
   return (
     <div className=" min-h-screen bg-[#222831] p-5">
       <h1 className="text-3xl font-bold mb-8 text-center  text-[#e5e7eb]">
         Cast Your Vote
       </h1>
-      <h2 className="text-2xl font-semibold mb-8 text-center  text-[#e5e7eb]">
-        5792 9051 3641
-      </h2>
+      <input
+        className=" w-full text-2xl font-semibold mb-8 text-center  text-[#e5e7eb] bg-inherit"
+        value={uid}
+        onChange={(e) => setUid(e.target.value)}
+      ></input>
 
       <div
         className={
@@ -20,15 +27,18 @@ const page = () => {
           (count > 6 ? "grid-cols-3" : "grid-cols-2")
         }
       >
-        {[1, 6, 7, 7, 7, 7].map(() => {
+        {candidateDetails.map((candidate, idx) => {
           return (
-            <button className="flex items-center justify-start space-x-6 w-full p-5 rounded-lg bg-[#00ADB5]">
+            <button
+              className="flex items-center justify-start space-x-6 w-full p-5 rounded-lg bg-[#00ADB5]"
+              onClick={() => castVote(idx + 1)}
+            >
               <div className="w-24 h-24">
                 <img
                   alt="Party Logo"
                   className="rounded-full"
                   height="96"
-                  src="https://www.bjp.org/files/content/images/constitution-image.jpg"
+                  src={candidate[1]}
                   style={{
                     aspectRatio: "96/96",
                     objectFit: "cover",
@@ -37,7 +47,7 @@ const page = () => {
                 />
               </div>
               <h2 className="text-xl font-semibold mb-2 text-[#e5e7eb]">
-                Party Name
+                {candidate[0]}
               </h2>
             </button>
           );
@@ -46,4 +56,4 @@ const page = () => {
     </div>
   );
 };
-export default page;
+export default VotingPage;

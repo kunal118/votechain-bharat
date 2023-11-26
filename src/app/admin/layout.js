@@ -1,15 +1,15 @@
 "use client";
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/admin/layout/Navbar";
 import Link from "next/link";
 
 import { Inter } from "next/font/google";
 import NoSSRToaster from "@/components/NoSSRToaster";
-import { SignerContext } from "@/context/signerContext";
+import { EtherSignerContext } from "@/context/EtherSignerContext";
 import { useState } from "react";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/admin/layout/Footer";
 import { EtherProviderContext } from "@/context/EtherProviderContext";
 import { ethers } from "ethers";
-import ElectionStages from "@/components/ElectionStages";
+import ElectionStages from "@/components/admin/layout/ElectionStages";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +26,7 @@ export default function layout({ children }) {
     <>
       <NoSSRToaster></NoSSRToaster>
 
-      <SignerContext.Provider value={signerObject}>
+      <EtherSignerContext.Provider value={signerObject}>
         <EtherProviderContext.Provider
           value={
             window.ethereum == null
@@ -41,7 +41,7 @@ export default function layout({ children }) {
 
           <Footer></Footer>
         </EtherProviderContext.Provider>
-      </SignerContext.Provider>
+      </EtherSignerContext.Provider>
     </>
   );
 }

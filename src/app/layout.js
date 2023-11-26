@@ -1,15 +1,15 @@
 "use client";
-import Navbar from "@/components/layout/Navbar";
+import Navbar from "@/components/admin/layout/Navbar";
 import Link from "next/link";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import NoSSRToaster from "@/components/NoSSRToaster";
-import { SignerContext } from "@/context/signerContext";
+import { EtherSignerContext } from "@/context/EtherSignerContext";
 import { useState } from "react";
-import Footer from "@/components/layout/Footer";
+import Footer from "@/components/admin/layout/Footer";
 import { EtherProviderContext } from "@/context/EtherProviderContext";
 import { ethers } from "ethers";
-import ElectionStages from "@/components/ElectionStages";
+import ElectionStages from "@/components/admin/layout/ElectionStages";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -2,7 +2,7 @@ import React from "react";
 
 import { useState, useEffect, useContext } from "react";
 
-import { SignerContext } from "../context/signerContext";
+import { EtherSignerContext } from "../../context/EtherSignerContext";
 import { v4 as uuidv4 } from "uuid";
 import { firebase_uploadSymbol } from "@/firebase/storage";
 

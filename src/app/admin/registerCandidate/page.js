@@ -1,5 +1,5 @@
 "use client";
-import PartyRegister from "@/components/PartyRegister";
+import PartyRegister from "@/components/admin/PartyRegister";
 import React from "react";
 import Link from "next/link";
 const page = () => {

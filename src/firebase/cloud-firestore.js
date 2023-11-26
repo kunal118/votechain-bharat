@@ -16,6 +16,7 @@ export async function firebase_registerParty(
       party_symbol_id: party_symbol_id,
       party_details: party_details,
       party_contact: party_contact,
+      party_selected: false,
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {

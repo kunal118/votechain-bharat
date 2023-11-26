@@ -6,7 +6,7 @@ import { SiBlockchaindotcom } from "react-icons/si";
 import { useContext } from "react";
 import Link from "next/link";
 import toast from "react-hot-toast";
-import { SignerContext } from "@/context/signerContext";
+import { EtherSignerContext } from "@/context/EtherSignerContext";
 import { EtherProviderContext } from "@/context/EtherProviderContext";
 import { ethers } from "ethers";
 import { contractAbi, contractAddress } from "@/smart_contract/contractEthers";
@@ -23,28 +23,28 @@ const NavbarItems = ({ title, path, classProps }) => {
 const Navbar = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   //to disable multiple clicks on the connect button
-  const { signer, setSigner } = useContext(SignerContext);
+  const { signer, setSigner } = useContext(EtherSignerContext);
   const etherProvider = useContext(EtherProviderContext);
   const [votingContract, setVotingContract] = useState("");
   // toast.success("hola");
 
-  useEffect(() => {
-    if (votingContract == "") return;
-    async function tellname() {
-      // alert(await votingContract.name());
-      console.log(await votingContract.addCandidate("kunal", "my_logo"));
-    }
-    votingContract.on("CandidateAdded", (name, logo, event) => {
-      // const amount = formatEther(_amount, 18);
-      console.log(`${name} => ${logo}`);
+  // useEffect(() => {
+  //   if (votingContract == "") return;
+  //   async function tellname() {
+  //     // alert(await votingContract.name());
+  //     console.log(await votingContract.addCandidate("kunal", "my_logo"));
+  //   }
+  //   votingContract.on("CandidateAdded", (name, logo, event) => {
+  //     // const amount = formatEther(_amount, 18);
+  //     console.log(`${name} => ${logo}`);
 
-      // The `event.log` has the entire EventLog
+  //     // The `event.log` has the entire EventLog
 
-      // Optionally, stop listening
-      // event.removeListener();
-    });
-    tellname();
-  }, [votingContract]);
+  //     // Optionally, stop listening
+  //     // event.removeListener();
+  //   });
+  //   tellname();
+  // }, [votingContract]);
 
   const handleConnect = async () => {
     setIsConnecting(true);
@@ -77,7 +77,9 @@ const Navbar = () => {
     }
     request_connection();
   }, []);
-
+  useEffect(() => {
+    console.log(signer);
+  }, [signer]);
   return (
     <nav
       className="w-full flex justify-between items-center px-6 py-2 bg-[#222831] text-[#EEEEEE]  border-slate-700 text-l title-krypt drop-shadow-xl"
