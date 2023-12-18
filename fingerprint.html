@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input
+      type="button"
+      id="btnCapture"
+      onclick="info()"
+      value="click to test"
+    />
+    <input
+      type="button"
+      id="btnCapture"
+      onclick="captureFPAuth()"
+      value="click to capture"
+    />
+  </body>
+
+  <script type="text/javascript">
+    function captureFPAuth() {
+      var port;
+      var urlStr = "";
+
+      urlStr = "http://localhost:11100/rd/capture";
+
+      getJSONCapture(urlStr, function (err, data) {
+        if (err != null) {
+          alert("Something went wrong: " + err);
+        } else {
+          alert("Response:-" + String(data));
+          console.log(data);
+        }
+      });
+    }
+    var getJSONCapture = function (url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("CAPTURE", url, true);
+      xhr.responseType = "text"; //json
+      var InputXml =
+        "<PidOptions>" +
+        '<Opts fCount="1" fType="0" iCount="0" pCount="0" format="0" pidVer="2.0" timeout="20000" otp="" posh="UNKNOWN" env="S" wadh="" />' +
+        "<Demo></Demo>" +
+        "<CustOpts>" +
+        '<Param name="ValidationKey" value="" />' +
+        "</CustOpts>" +
+        "</PidOptions>";
+      xhr.onload = function () {
+        var status = xhr.status;
+        if (status == 200) {
+          callback(null, xhr.response);
+        } else {
+          callback(status);
+        }
+      };
+      xhr.send(InputXml);
+    };
+
+    function info() {
+      var port;
+      var urlStr = "";
+      urlStr = "http://localhost:11100/rd/info";
+      getJSON_info(urlStr, function (err, data) {
+        if (err != null) {
+          alert("Something went wrong: " + err);
+        } else {
+          alert("Response:-" + String(data));
+        }
+      });
+    }
+    var getJSON_info = function (url, callback) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("DEVICEINFO", url, true);
+      xhr.responseType = "text";
+      xhr.onload = function () {
+        var status = xhr.status;
+        if (status == 200) {
+          callback(null, xhr.response);
+        } else {
+          callback(status);
+        }
+      };
+      xhr.send();
+    };
+  </script>
+</html>

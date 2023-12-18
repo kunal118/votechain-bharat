@@ -98,7 +98,10 @@ const Navbar = () => {
               name: "Candidate Registration",
               path: "/admin/registerCandidate",
             },
-            { name: "Voter Registration", path: "/registerVoter" },
+            {
+              name: "Registered candidates",
+              path: "/admin/registeredCandidates",
+            },
           ].map((item, index) => {
             return (
               <NavbarItems

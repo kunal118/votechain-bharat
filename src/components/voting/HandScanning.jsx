@@ -1,8 +1,6 @@
-/**
- * v0 by Vercel.
- * @see https://v0.dev/t/71TXRUpJDHQ
- */
+import { io } from "socket.io-client";
 export default function Component() {
+  const socket = io();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 space-y-8">
       <div className="flex space-x-8">
@@ -14,9 +12,9 @@ export default function Component() {
         </div>
       </div>
       <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold">Hand Scanning</h2>
+        <h2 className="text-3xl font-bold">Fingerprint Scanning</h2>
         <p className="text-lg text-gray-600 dark:text-gray-400">
-          Please place both your hands and wait while we verify your identity
+          Please place your finger and wait while we verify your identity
         </p>
       </div>
     </div>

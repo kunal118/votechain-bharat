@@ -1,26 +1,47 @@
 "use client";
 
-import React, { useContext, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
+const voterData = {
+  2: {
+    name: "Kunal Narang",
+    uid: "102003058",
+  },
+  3: {
+    name: "Atul Thakur",
+    uid: "102003064",
+  },
+};
 const VotingPage = ({ votingContract }) => {
+  const socket = io("http://localhost:4000");
+  socket.on("data", (msg) => {
+    // if (msg == "nf") setUid("nf");
+    console.log(msg);
+    // console.log(voterData[parseInt(msg)]["name"]);
+    // setName(msg);
+    setUid(voterData[parseInt(msg)]["uid"]);
+    setName(voterData[parseInt(msg)]["name"]);
+  });
   // const { signer, setSigner } = useContext(SignerContext);
   const candidateDetails = JSON.parse(localStorage.getItem("candidateDetails"));
-  const [uid, setUid] = useState("");
+  const [uid, setUid] = useState("Place your finger");
+  const [name, setName] = useState("");
   const count = candidateDetails.length;
   function castVote(id) {
     votingContract.castVote(uid, id);
   }
+
   return (
     <div className=" min-h-screen bg-[#222831] p-5">
       <h1 className="text-3xl font-bold mb-8 text-center  text-[#e5e7eb]">
         Cast Your Vote
       </h1>
-      <input
-        className=" w-full text-2xl font-semibold mb-8 text-center  text-[#e5e7eb] bg-inherit"
-        value={uid}
-        onChange={(e) => setUid(e.target.value)}
-      ></input>
-
+      <h2 className=" w-full text-2xl font-semibold mb-8 text-center  text-[#e5e7eb] bg-inherit">
+        {uid}
+      </h2>
+      <h2 className=" w-full text-2xl font-semibold mb-8 text-center  text-[#e5e7eb] bg-inherit">
+        {name}
+      </h2>
       <div
         className={
           "w-full p-6  grid  gap-8 " +
