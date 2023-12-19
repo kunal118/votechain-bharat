@@ -39,9 +39,51 @@ const PartySelector = () => {
     );
   }, [signer]);
   console.log(data);
-  function handleSubmit() {
-    // data.map((candidate, index) => {
+  async function handleSubmit() {
+    const selectedPartyNames = [];
+    const selectedPartySymbols = [];
+
+    let index = 0;
+
+    for await (const candidate of data) {
+      const path = "partySymbols/" + candidate.data.party_symbol_id;
+
+      const checkbox = document.getElementById(`box-${index.toString()}`);
+
+      if (checkbox.checked) {
+        selectedPartyNames.push(candidate.data.party_name);
+
+        try {
+          // Use await here to ensure that firebase_getPartySymbol completes before moving on
+          const url = await firebase_getPartySymbol(path);
+          selectedPartySymbols.push(url);
+        } catch (error) {
+          console.error(
+            `Error fetching party symbol for ${
+              selectedPartyNames[selectedPartyNames.length - 1]
+            }:`,
+            error
+          );
+          // Handle the error as needed
+          selectedPartySymbols.push(null); // or some default value
+        }
+      }
+
+      index++;
+    }
+
+    // Log the selected party names and symbols to the console
+    console.log("Selected Party Names:", selectedPartyNames);
+    console.log("Selected Party Symbols:", selectedPartySymbols);
+
+    // Assuming that votingContract.addCandidates is an asynchronous function,
+    // you might want to await it as well
+    await votingContract.addCandidates(
+      selectedPartyNames,
+      selectedPartySymbols
+    );
   }
+
   function handleCheckBoxChange(docId) {}
   return (
     <>

@@ -1,26 +1,59 @@
+import { EtherSignerContext } from "@/context/EtherSignerContext";
+import { contractAbi, contractAddress } from "@/smart_contract/contractEthers";
+import { ethers } from "ethers";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Drawer from "react-modern-drawer";
 
 //import styles 👇
 import "react-modern-drawer/dist/index.css";
+function toObject(proxy) {
+  return JSON.parse(
+    JSON.stringify(
+      proxy,
+      (key, value) => (typeof value === "bigint" ? value.toString() : value) // return everything else unchanged
+    )
+  );
+}
 const ElectionStages = ({ children }) => {
+  const [votingContract, setVotingContract] = useState("");
+  const { signer, setSigner } = useContext(EtherSignerContext);
+  useEffect(() => {
+    if (signer != "")
+      setVotingContract(
+        new ethers.Contract(contractAddress, contractAbi, signer)
+      );
+  }, [signer]);
+  useEffect(() => {
+    if (votingContract == "") return;
+    async function work() {
+      const stageObj = toObject(await votingContract.getStage());
+      setActiveIndex(parseInt(stageObj[0] - 1));
+    }
+    votingContract.addListener("StageChanged", () => {
+      work();
+    });
+    work();
+  }, [votingContract]);
+  function handleSubmit() {
+    votingContract.nextStage();
+  }
   const [isOpen, setIsOpen] = useState(false);
-  const toggleDrawer = () => {
-    setIsOpen((prevState) => !prevState);
-  };
+  // const toggleDrawer = () => {
+  //   setIsOpen((prevState) => !prevState);
+  // };
   const stages = ["Setup", "In process", "Ended"];
-  const activeIndex = 1;
+  const [activeIndex, setActiveIndex] = useState(0);
   return (
     <>
-      <Drawer
+      {/* <Drawer
         open={isOpen}
         onClose={toggleDrawer}
         direction="bottom"
         size="100vh"
       >
         <div>Hello World</div>
-      </Drawer>
+      </Drawer> */}
       <div class="flex h-full">
         <div class="w-1/5 bg-slate-700 break-words p-10 overflow-hidden h-full">
           <ul className=" flex list-none justify-between items-center flex-col flex-initial gap-8 ">
@@ -38,7 +71,7 @@ const ElectionStages = ({ children }) => {
             ))}
             <li key="nextStage">
               <button
-                onClick={toggleDrawer}
+                onClick={handleSubmit}
                 className="rounded  bg-[#00ADB5] py-2 px-5 hover:bg-slate-300 cursor-pointer"
               >
                 Proceed

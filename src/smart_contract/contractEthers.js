@@ -1,6 +1,11 @@
 // export const contractAddress = "0x26c5529904aDd2751D43E9a83ffc9Cc37009CCF7";
 // export const contractAddress = "0x6D827050dBbf61239cd3b85b751bbACB7d7083b2";
-export const contractAddress = "0x88c44f925df6cfa7b2cf3aef067b4929cca20d52";
+
+// export const contractAddress = "0x88c44f925df6cfa7b2cf3aef067b4929cca20d52";
+// export const contractAddress = "0xbF525443B068f1531A248Db1bF3278076DDEb070";
+// export const contractAddress = "0xe1616aa12e17d2f8ccf49945157ba456af16ecf6";
+// export const contractAddress = "0xa83230e5762766aa4d0f0afdb911f5d5f0eaa281";
+export const contractAddress = "0x4e18d965bdcfe3015cb00682674b845c029b5264";
 
 // The ERC-20 Contract ABI, which is a common contract interface
 // for tokens (this is the Human-Readable ABI format)
@@ -39,24 +44,17 @@ export const contractAbi = [
   {
     inputs: [
       {
-        internalType: "uint256",
-        name: "uid",
-        type: "uint256",
+        internalType: "string[]",
+        name: "partyNames",
+        type: "string[]",
       },
       {
-        internalType: "uint256",
-        name: "candidateId",
-        type: "uint256",
+        internalType: "string[]",
+        name: "partyLogos",
+        type: "string[]",
       },
     ],
-    name: "castVote",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "endVoting",
+    name: "addCandidates",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -113,6 +111,50 @@ export const contractAbi = [
     ],
     name: "CandidateAdded",
     type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: "string[]",
+        name: "partyNames",
+        type: "string[]",
+      },
+      {
+        indexed: false,
+        internalType: "string[]",
+        name: "partyLogos",
+        type: "string[]",
+      },
+    ],
+    name: "CandidatesAdded",
+    type: "event",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "uid",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "candidateId",
+        type: "uint256",
+      },
+    ],
+    name: "castVote",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "endVoting",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
   },
   {
     inputs: [],

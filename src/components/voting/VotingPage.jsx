@@ -11,6 +11,10 @@ const voterData = {
     name: "Atul Thakur",
     uid: "102003064",
   },
+  6: {
+    name: "Tushar Kapoor",
+    uid: "102003062",
+  },
 };
 const VotingPage = ({ votingContract }) => {
   const socket = io("http://localhost:4000");
@@ -27,8 +31,15 @@ const VotingPage = ({ votingContract }) => {
   const [uid, setUid] = useState("Place your finger");
   const [name, setName] = useState("");
   const count = candidateDetails.length;
-  function castVote(id) {
-    votingContract.castVote(uid, id);
+  async function castVote(id) {
+    try {
+      await votingContract.castVote(uid, id);
+      setUid("Place your finger");
+      setName("");
+    } catch (e) {
+      // console.log(e.code);
+      alert("Already voted");
+    }
   }
 
   return (

@@ -39,6 +39,7 @@ const PartyRegister = () => {
                 placeholder="Party Name"
                 value={partyName}
                 onChange={(e) => setPartyName(e.target.value)}
+                autoComplete={false}
               ></input>
             </li>
             <li className="flex gap-2 items-center">
@@ -58,6 +59,7 @@ const PartyRegister = () => {
                 placeholder="Party Details"
                 value={partyDetails}
                 onChange={(e) => setPartyDetails(e.target.value)}
+                autoComplete={false}
               ></input>
             </li>
             <li>
